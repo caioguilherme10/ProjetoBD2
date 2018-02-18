@@ -21,20 +21,23 @@
                   margin: 0;
                   padding: 0;
                 }
-              </style>
+        </style>
     </head>
     <body>
-        
         <nav>
             <div class="nav-wrapper teal darken-2">
                 <a href="#" class="brand-logo right">Avaliação de Escolas</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="left hide-on-med-and-down">
                     <li><a href="teladecadastro.html">Cadastrar</a></li>
                     <li><a href="teladelogin.html">Entrar</a></li>
                 </ul>
+                <ul class="side-nav" id="mobile-demo">
+                  <li><a href="teladecadastro.html">Cadastrar</a></li>
+                  <li><a href="teladelogin.html">Entrar</a></li>
+                </ul>
             </div>
         </nav>
-
         <div id="map"></div>
 
         <script>
@@ -72,7 +75,7 @@
                                   'Error: Your browser doesn\'t support geolocation.');
           }
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkSZMFAL2JdZ85kKr3C4Hex2Z6SJYOmPY&callback=initMap"async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCE4UC-ccylo_Z0O0kZOMusXWqkYwQ-YY0&callback=initMap"async defer></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
         <script>
             // Initialize Firebase
@@ -88,6 +91,11 @@
         </script>
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript">
+            $( document ).ready(function(){
+              $(".button-collapse").sideNav();
+            })
+        </script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script type="text/javascript" src="js/localStoragePlus.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

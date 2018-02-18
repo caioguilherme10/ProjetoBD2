@@ -20,20 +20,6 @@
 		
         var confirma = logar(Email.value,Password.value);
 
-        if(confirma){
-            
-            var user = {
-                email: Email.value,
-                pass: Password.value
-            };
-    
-            var array = localStorage.getObject("usuario");
-            array.push(user);
-            localStorage.setObject("estoque", array);      
-    
-            window.location.replace("telaprincipal.html");
-        }
-
 	});
 	
 	function logar(email,pass){
@@ -43,7 +29,16 @@
 		//o metodo signInWithEmailAndPassword serve para fazer o login no firebase.
         auth.signInWithEmailAndPassword(email, pass).then(function(){
 
-            return true;
+            var user = {
+                email: Email.value,
+                pass: Password.value
+            };
+    
+            var array = localStorage.getObject("usuario");
+            array.push(user);
+            localStorage.setObject("usuario", array);    
+    
+            window.location.replace("telaprincipal.html");
 
         }, function(error) {
 			// Handle Errors here.

@@ -8,6 +8,7 @@
 
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
 	</head>
 	<body class="blue lighten-5">
 		<!--Import jQuery before materialize.js-->
@@ -48,9 +49,20 @@
 				</div>
 			</div>
         </div>
-        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script>
+			// Initialize Firebase
+			var config = {
+			  apiKey: "AIzaSyD6KajXkA3X6XZcJq6j3Vc4Fdx8Tx8_AQY",
+			  authDomain: "projetobd-6b214.firebaseapp.com",
+			  databaseURL: "https://projetobd-6b214.firebaseio.com",
+			  projectId: "projetobd-6b214",
+			  storageBucket: "projetobd-6b214.appspot.com",
+			  messagingSenderId: "658505320703"
+			};
+			firebase.initializeApp(config);
+		</script>
 		<script type="text/javascript" src="js/localStoragePlus.js"></script>
 		<script type="text/javascript" src="js/bancodadosCadastro.js"></script>
 	</body>
