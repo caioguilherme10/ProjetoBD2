@@ -36,7 +36,8 @@ function cadastra(nome1, rua1, bairro1, cidade1, lat1, lng1){
             bairro : bairro1,
             cidade : cidade1,
             lat : lat1,
-            lng : lng1
+            lng : lng1,
+            media : "0"
         }).key;
 
         alert("Cadastro feito com sucesso!")

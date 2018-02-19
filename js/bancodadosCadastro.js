@@ -28,13 +28,15 @@ function cadastra(novoName1, novoEmail1, novoPass1){
             firebase.database().ref('users/').push({
                 name : novoName1,
                 email : novoEmail1,
-                pass : novoPass1
+                pass : novoPass1,
+                avaliaçao : "0"
             }).key;     
 
             var user = {
                 nome : novoName1,
                 email: novoEmail1,
-                pass: novoPass1
+                pass: novoPass1,
+                avaliaçao : "0"
             };
     
             var array = localStorage.getObject("usuario");

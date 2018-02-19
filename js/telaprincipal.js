@@ -17,7 +17,10 @@ btnLogout.addEventListener('click', e => {
     firebase.auth().signOut();
     //O usuario e mandado para a pagina inicial.
     window.location.replace("index.html");
+
 });
+
+localStorage.setObject("localidade2", []);
 
 const dbRefObjec = firebase.database().ref();
 const dbRefList = dbRefObjec.child('users');
@@ -34,11 +37,14 @@ dbRefList.on('child_added', snap => {
         var user = {
             name: snap.val().name,
             email: array[0].email,
-            pass: array[0].pass
+            pass: array[0].pass,
+            avaliaçao : "0"
         };
 
+        console.log(user);
         array = [];
         array.push(user);
+        console.log(array);
         localStorage.setObject("usuario", array);       
     }
 
