@@ -32,9 +32,9 @@
                     <li><a href="teladecadastro.html">Cadastrar</a></li>
                     <li><a href="teladelogin.html">Entrar</a></li>
                 </ul>
-                <ul class="side-nav" id="mobile-demo">
-                  <li><a href="teladecadastro.html">Cadastrar</a></li>
-                  <li><a href="teladelogin.html">Entrar</a></li>
+                <ul class="side-nav teal darken-2" id="mobile-demo">
+                  <li><a class="white-text" href="teladecadastro.html">Cadastrar</a></li>
+                  <li><a class="white-text" href="teladelogin.html">Entrar</a></li>
                 </ul>
             </div>
         </nav>
@@ -42,10 +42,48 @@
 
         <script>
         function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-              center: {lat: -6.8899589, lng: -38.566035},
-              zoom: 14
+          
+          const dbRefObjec = firebase.database().ref();
+	        const dbRefList = dbRefObjec.child('localidade');
+
+          var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -6.8899589, lng: -38.566035},
+            zoom: 14
+          });
+            
+          dbRefList.on('child_added', snap => {
+
+            var marker = new google.maps.Marker({
+              position: {lat: snap.val().lat, lng: snap.val().lng},
+              map: map
             });
+
+          });
+
+          dbRefList.on('child_changed', snap => {
+
+            var marker = new google.maps.Marker({
+              position: {lat: snap.val().lat, lng: snap.val().lng},
+              map: map
+            });
+
+          });
+
+          google.maps.event.addListener(map,'click', function(event) {
+              var lat = event.latLng.lat().toFixed(6);
+              var lng = event.latLng.lng().toFixed(6);
+
+              localStorage.setObject("ponto", []);
+
+              var array = localStorage.getObject("ponto");
+              array.push(lat);
+              array.push(lng);
+              localStorage.setObject("ponto", array);
+
+              window.location.replace("teladelocalidade.html");
+
+          });
+          
             var infoWindow = new google.maps.InfoWindow({map: map});
     
             // Try HTML5 geolocation.
