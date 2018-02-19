@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8">
+        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+    </head>
+    <body class="blue lighten-5">
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper teal darken-2">
+                    <a href="telaprincipal.html" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">replay</i></a>
+                    <a href="telaprincipal.html" class="brand-logo">Informações de Localidade</a>
+                </div>
+            </nav>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <a class="black-text">Nome da Escola: <span class="black-text" id="Escola_Localidade"></span></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <a class="black-text">Nome da Rua: <span class="black-text" id="Rua_Localidade"></span></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <a class="black-text">Nome do Bairro: <span class="black-text" id="Bairro_Localidade"></span></a>
+                       </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <a class="black-text">Nome da Cidade: <span class="black-text" id="Cidade_Localidade"></span></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <a class="black-text">Média de Avaliação: <span class="black-text" id="Media_Localidade"></span></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12" id="avaliaçao">
+                            <input id="Avaliaçao_Localidade" type="text" class="validate" value="">
+                            <label for="Avaliaçao_Localidade">Avalie de 0 a 10 a Escola</label>
+                            <a class="btn-floating btn-large red" id="btavaliaçao">
+                                <i class="large material-icons">done</i>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="comentarios">
+                        <div class="row">
+                            <form class="col s12">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                                        <label for="textarea1">Comentários</label>
+                                        <a class="btn-floating btn-large red" id="btavaliaçao">
+                                            <i class="large material-icons">done</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <form class="col s12">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <a class="black-text">Comentários: <span class="black-text" id="Comentarios_Localidade"></span></a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyD6KajXkA3X6XZcJq6j3Vc4Fdx8Tx8_AQY",
+                authDomain: "projetobd-6b214.firebaseapp.com",
+                databaseURL: "https://projetobd-6b214.firebaseio.com",
+                projectId: "projetobd-6b214",
+                storageBucket: "projetobd-6b214.appspot.com",
+                messagingSenderId: "658505320703"
+            };
+            firebase.initializeApp(config);
+        </script>
+        <script type="text/javascript" src="js/localStoragePlus.js"></script>
+        <script type="text/javascript" src="js/teladeinforma.js"></script>
+    </body>
+</html>

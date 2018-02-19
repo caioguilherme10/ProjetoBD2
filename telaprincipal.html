@@ -80,31 +80,17 @@
               //google.maps.event.addListener(map, 'click', function(event) {
                 //addMarker(event.latLng, map);
               //});
-      
+
               // Add a marker at the center of the map.
               //addMarker(cajazeiras, map);
-              const dbRefObjec = firebase.database().ref();
-	            const dbRefList = dbRefObjec.child('localidade');
-
-              dbRefList.on('child_added', snap => {
-
-                var position = {lat: parseInt(snap.val().lat), lng: parseInt(snap.val().lng)};
-                addMarker(position, map);
-
-              });
-
-              dbRefList.on('child_changed', snap => {
-
-                var position = {lat: parseInt(snap.val().lat), lng: parseInt(snap.val().lng)};
-                addMarker(position, map);
-
-              });
               
-              google.maps.event.addListener(map,'click', function(event) {
+              addMarkerF(map);
 
+              google.maps.event.addListener(map,'click', function(event) {
+                
                 var lat = event.latLng.lat().toFixed(6);
                 var lng = event.latLng.lng().toFixed(6);
-
+                
                 localStorage.setObject("ponto", []);
 
                 var array = localStorage.getObject("ponto");
@@ -113,23 +99,84 @@
                 localStorage.setObject("ponto", array);
 
                 window.location.replace("teladelocalidade.html");
+              
 
               });
+
             }
-      
-            // Adds a marker to the map.
-            function addMarker(location, map) {
-              // Add the marker at the clicked location, and add the next-available label
-              // from the array of alphabetical characters.
-              var marker = new google.maps.Marker({
-                position: location,
-                //label: labels[labelIndex++ % labels.length],
-                map: map
+            
+            function addMarkerF(map){
+              const dbRefObjec = firebase.database().ref();
+	            const dbRefList = dbRefObjec.child('localidade');
+              
+              localStorage.setObject("listaponto", []);
+
+              dbRefList.on('child_added', snap => {
+
+                var position1 = {lat: parseFloat(snap.val().lat), lng: parseFloat(snap.val().lng)};
+                //addMarker(position, map);
+                var arrayponto = localStorage.getObject("listaponto");
+                arrayponto.push(position1);
+                localStorage.setObject("listaponto", arrayponto);
+
+                var marker = new google.maps.Marker({
+                  position: position1,
+                  //label: labels[labelIndex++ % labels.length],
+                  map: map
+                });
+
+                google.maps.event.addListener(marker,'click', function(event) {
+                  // coloque aqui o que você quer fazer quando clicar no marker
+                  var lat = event.latLng.lat().toFixed(6);
+                  var lng = event.latLng.lng().toFixed(6);
+                
+                  localStorage.setObject("ponto", []);
+
+                  var array = localStorage.getObject("ponto");
+                  array.push(lat);
+                  array.push(lng);
+                  localStorage.setObject("ponto", array);
+
+                  window.location.replace("teladeinforma.html");
+                });
+
               });
+
+              dbRefList.on('child_changed', snap => {
+
+                var position1 = {lat: parseFloat(snap.val().lat), lng: parseFloat(snap.val().lng)};
+                //addMarker(position, map);
+                var arrayponto = localStorage.getObject("listaponto");
+                arrayponto.push(position1);
+                localStorage.setObject("listaponto", arrayponto);
+
+                var marker = new google.maps.Marker({
+                  position: position1,
+                  //label: labels[labelIndex++ % labels.length],
+                  map: map
+                });
+
+                google.maps.event.addListener(marker,'click', function(event) {
+                  // coloque aqui o que você quer fazer quando clicar no marker
+                  var lat = event.latLng.lat().toFixed(6);
+                  var lng = event.latLng.lng().toFixed(6);
+                
+                  localStorage.setObject("ponto", []);
+
+                  var array = localStorage.getObject("ponto");
+                  array.push(lat);
+                  array.push(lng);
+                  localStorage.setObject("ponto", array);
+
+                  window.location.replace("teladeinforma.html");
+                });
+
+              });
+
             }
-      
+
             google.maps.event.addDomListener(window, 'load', initialize);
-          </script>
+          </script> 
     </head>
     <body>
       <!--
