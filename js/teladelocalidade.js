@@ -30,14 +30,13 @@ function cadastra(nome1, rua1, bairro1, cidade1, lat1, lng1){
 
     if((nome1!="")&&(rua1!="")&&(bairro1!="")&&(cidade1!="")){
 
-        firebase.database().ref('localidade/').push({
+        firebase.database().ref('localidades/').push({
             nome : nome1,
             rua : rua1,
             bairro : bairro1,
             cidade : cidade1,
             lat : lat1,
-            lng : lng1,
-            media : "0"
+            lng : lng1
         }).key;
 
         alert("Cadastro feito com sucesso!")

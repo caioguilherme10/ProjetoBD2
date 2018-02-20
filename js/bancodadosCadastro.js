@@ -3,7 +3,6 @@
 const novoEmail = document.getElementById('email');
 const novoPass = document.getElementById('password');
 const novoName = document.getElementById('first_name');
-
 var database = firebase.database();
 
 btnNovo.addEventListener('click' , e => {
@@ -24,24 +23,22 @@ function cadastra(novoName1, novoEmail1, novoPass1){
             //    name : novoName1,
             //    email : novoEmail1,
             //    pass : novoPass1
-            //}).key; 
-            firebase.database().ref('users/').push({
-                name : novoName1,
+            //}).key;
+            firebase.database().ref('usuarios/').push({
+                nome : novoName1,
                 email : novoEmail1,
-                pass : novoPass1,
-                avaliaçao : "0"
+                senha : novoPass1
             }).key;     
 
             var user = {
                 nome : novoName1,
                 email: novoEmail1,
-                pass: novoPass1,
-                avaliaçao : "0"
+                senha : novoPass1
             };
     
-            var array = localStorage.getObject("usuario");
+            var array = localStorage.getObject("usuarios");
             array.push(user);
-            localStorage.setObject("usuario", array);
+            localStorage.setObject("usuarios", array);
             
             alert("Cadastro feito com sucesso!")
             window.location.replace("telaprincipal.html");

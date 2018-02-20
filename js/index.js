@@ -1,5 +1,6 @@
 (function(){
-    localStorage.setObject("usuario", []);
+    localStorage.setObject("usuarios", []);
+    localStorage.setObject("localidades", []);
     firebase.auth().signOut();
 
     firebase.auth().onAuthStateChanged(firebaseUser =>{

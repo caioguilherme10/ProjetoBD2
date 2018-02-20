@@ -5,6 +5,7 @@
             console.log("ta on");
         }else{
             console.log("ta off");
+            window.location.replace("index.html");
         }
     });
 
@@ -20,11 +21,13 @@ btnLogout.addEventListener('click', e => {
 
 });
 
-localStorage.setObject("localidade2", []);
-
-const dbRefObjec = firebase.database().ref();
+/*const dbRefObjec = firebase.database().ref();
 const dbRefList = dbRefObjec.child('users');
 var array = localStorage.getObject("usuario");
+
+const two = dbRefObjec.child('users').orderByChild('email').equalTo(array[0].email);
+
+console.log(two);
 
 dbRefList.on('child_added', snap => {
 				
@@ -38,7 +41,7 @@ dbRefList.on('child_added', snap => {
             name: snap.val().name,
             email: array[0].email,
             pass: array[0].pass,
-            avaliaçao : "0"
+            avaliacao : array[0].avaliacao
         };
 
         console.log(user);
@@ -47,6 +50,28 @@ dbRefList.on('child_added', snap => {
         console.log(array);
         localStorage.setObject("usuario", array);       
     }
+
+});*/
+var array = localStorage.getObject("usuarios");
+
+const dbRefObjec = firebase.database().ref();
+
+const two = dbRefObjec.child('usuarios').orderByChild('email').equalTo(array[0].email);
+
+two.on('child_added', snap => {
+
+    document.getElementById("name").innerHTML = snap.val().nome;
+    document.getElementById("email").innerHTML = snap.val().email;
+
+    var user = {
+        nome: snap.val().nome,
+        email: snap.val().email,
+        senha: snap.val().senha,
+        key : snap.key
+    };
+
+    array.push(user);
+    localStorage.setObject("usuarios", array);
 
 });
 

@@ -31,12 +31,12 @@
 
             var user = {
                 email: Email.value,
-                pass: Password.value
+                senha : Password.value
             };
     
-            var array = localStorage.getObject("usuario");
+            var array = localStorage.getObject("usuarios");
             array.push(user);
-            localStorage.setObject("usuario", array);    
+            localStorage.setObject("usuarios", array);    
     
             window.location.replace("telaprincipal.html");
 
