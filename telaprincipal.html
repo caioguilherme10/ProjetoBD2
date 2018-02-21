@@ -35,7 +35,7 @@
                   padding: 0;
                 }
         </style>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCE4UC-ccylo_Z0O0kZOMusXWqkYwQ-YY0"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCE4UC-ccylo_Z0O0kZOMusXWqkYwQ-YY0&libraries=places"></script>
         <script>
             // In the following example, markers appear when the user clicks on the map.
             // Each marker is labeled with a single alphabetical character.
@@ -103,6 +103,41 @@
 
               });
 
+              var searchBox = new google.maps.places.SearchBox(document.getElementById('boxminha'));
+            	map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('boxminha'));
+
+
+	            map.addListener('bounds_changed', function() {
+		            searchBox.setBounds(map.getBounds());
+	            });
+	
+	 
+		
+	            searchBox.addListener('places_changed', function() {
+		            var places = searchBox.getPlaces();
+
+		            if (places.length == 0) {
+	    	          return;
+	  	          }
+
+	  	
+	  	          var bounds = new google.maps.LatLngBounds();
+	  	          places.forEach(function(place) {
+	                if (!place.geometry) {
+	    	  	        console.log("Returned place contains no geometry");
+	      		        return;
+	   		          }
+
+	    	          if (place.geometry.viewport) {
+            
+                    bounds.union(place.geometry.viewport);
+	    	          } else {
+	      		        bounds.extend(place.geometry.location);
+	    	          }
+	  	          });
+		            map.fitBounds(bounds);
+	            });  
+
             }
             
             function addMarkerF(map){
@@ -113,11 +148,30 @@
 
               dbRefList.on('child_added', snap => {
 
+
                 var position1 = {lat: parseFloat(snap.val().lat), lng: parseFloat(snap.val().lng)};
                 //addMarker(position, map);
                 var arrayponto = localStorage.getObject("listaponto");
                 arrayponto.push(position1);
                 localStorage.setObject("listaponto", arrayponto);
+                
+                /*const dbRefObjec15 = firebase.database().ref();
+                const dbRefList15 = dbRefObjec15.child('media');
+
+                var quantidade = 0;
+                var soma = 0;
+                var mediaqm = 0;
+    
+                dbRefList15.on('child_added', snap4 => {
+
+                  if(snap4.val().valor != undefined){
+
+                    quantidade += 1;
+                    soma += snap4.val().valor;
+                    mediaqm = soma/quantidade;
+                  }
+
+                });*/
 
                 var marker = new google.maps.Marker({
                   position: position1,
@@ -217,6 +271,7 @@
               </div>
             </nav>
         </div>
+        <input type="text" id="boxminha">
         <div id="map"></div>
 
         <!--<script>

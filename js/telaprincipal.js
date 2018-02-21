@@ -5,6 +5,8 @@
             console.log("ta on");
         }else{
             console.log("ta off");
+            localStorage.setObject("localidades", []);
+            localStorage.setObject("usuarios", []);
             window.location.replace("index.html");
         }
     });
@@ -70,7 +72,9 @@ two.on('child_added', snap => {
         key : snap.key
     };
 
+    array = [];
     array.push(user);
+    console.log(user);
     localStorage.setObject("usuarios", array);
 
 });

@@ -6,6 +6,8 @@ var array = localStorage.getObject("ponto");
 const lat = array[0];
 const lng = array[1];
 
+var arr = localStorage.getObject("localidades");
+
 dbRefList.on('child_added', snap => {
 
     if((snap.val().lat == lat)&&(snap.val().lng == lng)){
@@ -39,7 +41,11 @@ dbRefList.on('child_added', snap => {
             key : snap.key
         };
 
-        salvarlocalidade(localidade);
+        //salvarlocalidade(localidade);
+        arr = [];
+        arr.push(localidade);
+        console.log(arr);
+        localStorage.setObject("localidades", arr);
     }
 
 });
@@ -76,8 +82,11 @@ dbRefList.on('child_changed', snap => {
             key : snap.key
         };
 
-        salvarlocalidade(localidade);
+        //salvarlocalidade(localidade);
+        arr.push(localidade);
+        localStorage.setObject("localidades", arr);
     }
+    
 });
 
 function salvarlocalidade(novo4){
@@ -88,9 +97,120 @@ function salvarlocalidade(novo4){
 	
 }
 
+const dbRefObjec15 = firebase.database().ref();
+const dbRefList15 = dbRefObjec15.child('media');
+var arr2 = localStorage.getObject("localidades");
+var quantidade = 0;
+var soma = 0;
+    
+dbRefList15.on('child_added', snap4 => {
+
+    if((snap4.val().valor != undefined)&&(snap4.val().keyL == arr2[0].key)){
+
+        quantidade += 1;
+        soma += snap4.val().valor;
+        document.getElementById("Media_Localidade").innerHTML = soma/quantidade;
+    }
+
+});
+
+const dbRefObjec50 = firebase.database().ref();
+const dbRefList16 = dbRefObjec50.child('comentarios');
+    
+dbRefList16.on('child_added', snap7 => {
+
+    if((snap7.val().valor != undefined)&&(snap7.val().keyL == arr2[0].key)){
+
+        console.log(snap7.val().valor);
+
+        comentarios.innerHTML += "<form class='col s12'>"+ 
+                                "<div class='row'>" +
+                                "<div class='input-field col s12'>" +
+                                "<a class='black-text'>Comentário:</a>" + "<br>"+
+                                "<a class='black-text'>"+ snap7.val().valor + "</a>" +
+                                "</div>" +
+                                "</div>" +
+                                "</form>"
+        
+    }
+
+});
+
+dbRefList16.on('child_changed', snap7 => {
+
+    if(snap7.val().valor != undefined){
+
+        console.log(snap7.val().valor);
+
+        comentarios.innerHTML += "<form class='col s12'>"+ 
+                                "<div class='row'>" +
+                                "<div class='input-field col s12'>" +
+                                "<a class='black-text'>Comentário:</a>" + "<br>"+
+                                "<a class='black-text'>"+ snap7.val().valor + "</a>" +
+                                "</div>" +
+                                "</div>" +
+                                "</form>"
+        
+    }
+
+});
+
+/*var quantidade = 0;
+var soma = 0;
+
+dbRefList15.on('child_changed', snap4 => {
+
+    if(snap4.val().valor != undefined){
+
+        quantidade += 1;
+        soma += snap4.val().valor;
+        document.getElementById("Media_Localidade").innerHTML = soma/quantidade;
+    }
+
+});*/
+
 firebase.auth().onAuthStateChanged(firebaseUser =>{
     if(firebaseUser){
         console.log("ta on");
+
+        avaliaçao.innerHTML = "<a class='black-text'>Avalie de 0 a 10 a Escola: </a>" +
+                                "<input id='Avaliaçao_Localidade' type='text' class='validate' value=''>" +
+                                "<a class='btn-floating btn-large red' onclick=mudar()>" +
+                                "<i class='large material-icons'>done</i>" +
+                                "</a>";
+
+        var array7 = localStorage.getObject("usuarios");
+        var array8 = localStorage.getObject("localidades");
+
+        console.log(array7[1]);
+        console.log(array7[0]);
+        console.log(array8[0]);
+        console.log(array8[1]);
+
+        const dbRefObjec8 = firebase.database().ref();
+        //const dbRefList8 = dbRefObjec8.child('media/'+ array8[0].key + '/'+ array7[1].key);
+        //const dbRefList8 = dbRefObjec8.child('media');
+        const dbRefList8 = dbRefObjec8.child('media').orderByChild('keyL_keyU').equalTo(array8[0].key + '_'+ array7[0].key);
+        console.log(dbRefList8);
+
+        dbRefList8.on('child_added', snap => {
+            console.log(snap.val().valor);
+
+            avaliaçao.innerHTML = "<a class='black-text'>Avalie de 0 a 10 a Escola: </a>" +
+                                "<input id='Avaliaçao_Localidade' type='text' class='validate' value='"+ snap.val().valor +"'>" +
+                                "<a class='btn-floating btn-large red' onclick=mudar()>" +
+                                "<i class='large material-icons'>done</i>" +
+                                "</a>";
+        });
+
+        dbRefList8.on('child_changed', snap => {
+
+            avaliaçao.innerHTML = "<a class='black-text'>Avalie de 0 a 10 a Escola: </a>" +
+                                "<input id='Avaliaçao_Localidade' type='text' class='validate' value='"+ snap.val().valor +"'>" +
+                                "<a class='btn-floating btn-large red' onclick=mudar()>" +
+                                "<i class='large material-icons'>done</i>" +
+                                "</a>";
+        });
 
         /*const dbRefObjec1 = firebase.database().ref();
         const dbRefList1 = dbRefObjec1.child('usuarios');
@@ -156,10 +276,89 @@ firebase.auth().onAuthStateChanged(firebaseUser =>{
     }
 });
 
-/*function mudar(){
+function mudar(){
             
     const atribuir = document.getElementById('Avaliaçao_Localidade');
-    var array2 = localStorage.getObject("usuario");
+
+    var array10 = localStorage.getObject("usuarios");
+    var array11 = localStorage.getObject("localidades");
+
+    console.log(array10[0].key);
+    console.log(array11[0].key);
+
+    const dbRefObjec20 = firebase.database().ref();
+    const dbRefList20 = dbRefObjec20.child('media').orderByChild('keyL_keyU').equalTo(array11[0].key +'_'+ array10[0].key);
+
+    dbRefList20.once('value', s =>{
+        var a = s.exists();
+            
+        if(a != true){
+
+            firebase.database().ref('media').push({
+                valor : parseInt(atribuir.value),
+                keyL : array11[0].key,
+                keyL_keyU : array11[0].key +"_"+ array10[0].key
+            }).key;
+
+        }else{
+
+            dbRefList20.on('child_added', s => {
+        
+                const novo20 = {
+                    valor : parseInt(atribuir.value),
+                    keyL : array11[0].key,
+                    keyL_keyU : array11[0].key +"_"+ array10[0].key
+                } 
+                var updates = {};
+                    
+                console.log(s.key);
+        
+                updates['media/' + s.key] = novo20;
+                    
+                //metodo para atualizar os dados.
+                firebase.database().ref().update(updates);              
+        
+            });
+
+        }
+    });
+
+
+    /*dbRefList20.once('value', s =>{
+
+        var a = s.exists();
+
+        console.log(a);
+					
+		if(a === true){
+
+            const novo20 = {
+                valor : parseInt(atribuir.value),
+                keyL_keyU : array11[0].key +"_"+ array10[0].key
+            } 
+            var updates = {};
+            
+            console.log(s.key);
+            console.log(s.val().key);
+
+            updates['media/' + s.key] = novo20;
+            
+            //metodo para atualizar os dados.
+            firebase.database().ref().update(updates);
+
+        }else{
+
+            console.log(s.key);
+
+            firebase.database().ref('media').push({
+                valor : parseInt(atribuir.value),
+                keyL_keyU : array11[0].key +"_"+ array10[0].key
+            }).key;
+        }
+
+    });*/
+
+    /*var array2 = localStorage.getObject("usuario");
 
     const novo = {
         nome : array2[0].nome,
@@ -207,6 +406,23 @@ firebase.auth().onAuthStateChanged(firebaseUser =>{
     
     //metodo para atualizar os dados.
     firebase.database().ref().update(updates1);
-    localStorage.setObject("localidade2", []);
+    localStorage.setObject("localidades", []);*/
     window.location.replace("telaprincipal.html");
-}*/
+}
+
+btavaliaçao.addEventListener('click', e => {
+
+    const atribuir = document.getElementById('textarea1');
+
+    var array30 = localStorage.getObject("usuarios");
+    var array31 = localStorage.getObject("localidades");
+
+
+    firebase.database().ref('comentarios').push({
+        valor : atribuir.value,
+        keyL : array31[0].key,
+        keyL_keyU : array31[0].key +"_"+ array30[0].key
+    }).key;
+
+    window.location.replace("telaprincipal.html");
+});
